@@ -16,8 +16,8 @@ class Banner
     public function getBanner($id)
     {
         $data = [
-            'name' => 'vendor',
-            'email' => 'vendor@qq.com'
+            'name' => 'vendor11111111',
+            'email' => 'vendorqq.com'
         ];
 
         $validate = new Validate([
@@ -25,8 +25,8 @@ class Banner
             'email' => 'email'
         ]);
 
-        $result = $validate->check($data);
-        
-        dump($result);
+        $result = $validate->batch()->check($data);
+        dump($validate->getError());
+    
     }
 }
