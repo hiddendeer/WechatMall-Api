@@ -1,7 +1,7 @@
 <?php
 namespace app\api\controller\v1;
 
-use think\Validate;
+use app\api\validate\IDMustPostiveInt;
 
 class Banner
 {
@@ -15,18 +15,7 @@ class Banner
      **/
     public function getBanner($id)
     {
-        $data = [
-            'name' => 'vendor11111111',
-            'email' => 'vendorqq.com'
-        ];
+        (new IDMustPostiveInt())->gocheck();
 
-        $validate = new Validate([
-            'name' => 'require|max:10',
-            'email' => 'email'
-        ]);
-
-        $result = $validate->batch()->check($data);
-        dump($validate->getError());
-    
     }
 }
