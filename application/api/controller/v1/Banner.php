@@ -19,6 +19,8 @@ class Banner
     {
         //对传入的id检验
         (new IDMustBePostiveInt())->gocheck();
+
+        /* 抛出JSON异常处理 */
         try {
             $banner = BannerModel::getBannerById($id);
         } 
