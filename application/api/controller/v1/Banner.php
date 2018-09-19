@@ -1,9 +1,8 @@
 <?php
 namespace app\api\controller\v1;
 
-use app\api\validate\IDMustBePostiveInt;
 use app\api\model\Banner as BannerModel;
-use think\Exception;
+use app\api\validate\IDMustBePostiveInt;
 
 class Banner
 {
@@ -21,16 +20,7 @@ class Banner
         (new IDMustBePostiveInt())->gocheck();
 
         /* 抛出JSON异常处理 */
-        try {
-            $banner = BannerModel::getBannerById($id);
-        } 
-        catch (Exception $ex) {
-            $err = [
-                          'error_code' => 10001,
-                          'error_msg' => $ex->getMessage()
-                      ];
-            return json($err, 400);
-        }
+        $banner = BannerModel::getBannerById($id);
 
         return $banner;
     }
