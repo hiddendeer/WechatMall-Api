@@ -3,6 +3,8 @@ namespace app\api\controller\v1;
 
 use app\api\model\Banner as BannerModel;
 use app\api\validate\IDMustBePostiveInt;
+use app\lib\exception\BannerMissException;
+use think\Exception;
 
 class Banner
 {
@@ -21,7 +23,11 @@ class Banner
 
         /* 抛出JSON异常处理 */
         $banner = BannerModel::getBannerById($id);
-
+    
+        if (!$banner) {
+            throw new BannerMissException();
+            // throw new Exception();
+        }
         return $banner;
     }
 }
