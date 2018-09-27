@@ -9,6 +9,7 @@ use think\Exception;
 use think\exception\Handle;
 use think\Request;
 use app\lib\exception\BaseException;
+use think\Log;
 
 class ExceptionHandler extends Handle
 {
@@ -29,7 +30,7 @@ class ExceptionHandler extends Handle
             $this->code = 500;
             $this->msg = '服务器内部错误，不想告诉你';
             $this->errorCode = 999;
-            // $this->recordErrorLog($e);
+            $this->recordErrorLog($e);
         }
 
         $request = Request::instance();
@@ -44,13 +45,14 @@ class ExceptionHandler extends Handle
 
     }
 
-    // private function recordErrorLog (Exception $e) {
-    //     Log::init([
-    //         'type' => 'File',
-    //         'path' => LOG_PATH,
-    //         'level' => ['error']
-    //     ]);
-    //     Log::record($e->getMessage(),'error');
-    // }
+    private function recordErrorLog (Exception $e) {
+        Log::init([
+            'type' => 'File',
+            'path' => LOG_PATH,
+            'level' => ['error']
+        ]);
+
+        Log::record($e->getMessage(),'error');
+    }
 
 }
