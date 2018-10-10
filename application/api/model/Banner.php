@@ -2,6 +2,7 @@
 
 namespace app\api\model;
 
+use think\Exception;
 use think\Db;
 
 class Banner
