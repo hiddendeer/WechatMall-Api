@@ -4,9 +4,11 @@ namespace app\api\model;
 
 use think\Exception;
 use think\Db;
+use think\Model;
 
-class Banner
+class Banner extends Model
 {
+    protected $table = 'banner_item';
     public static function getBannerById($id)
     {
         //原生查询

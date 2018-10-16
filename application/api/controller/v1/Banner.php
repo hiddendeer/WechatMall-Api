@@ -21,13 +21,16 @@ class Banner
         //对传入的id检验
         (new IDMustBePostiveInt())->gocheck();
 
-        /* 抛出JSON异常处理 */
-        $banner = BannerModel::getBannerById($id);
+        //自定义Model方法
+        // $banner = BannerModel::getBannerById($id);
 
+        $banner = BannerModel::find(['banner_id','=',$id]);
+
+        /* 抛出JSON异常处理 */
         if (!$banner) {
             throw new BannerMissException();
         }
 
-        return json($banner);
+        return $banner;
     }
 }
