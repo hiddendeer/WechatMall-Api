@@ -18,14 +18,14 @@ class Banner
      **/
     public function getBanner($id)
     {
-        //对传入的id检验
+        //面向AOP编程
         (new IDMustBePostiveInt())->gocheck();
 
         //自定义Model方法
         // $banner = BannerModel::getBannerById($id);
 
-        $banner = BannerModel::find(['banner_id','=',$id]);
-
+        $banner = BannerModel::with(['items','items.img'])->find($id);
+  
         /* 抛出JSON异常处理 */
         if (!$banner) {
             throw new BannerMissException();
