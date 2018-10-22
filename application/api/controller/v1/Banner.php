@@ -22,9 +22,7 @@ class Banner
         (new IDMustBePostiveInt())->gocheck();
 
         //自定义Model方法
-        // $banner = BannerModel::getBannerById($id);
-
-        $banner = BannerModel::with(['items','items.img'])->find($id);
+        $banner = BannerModel::getBannerById($id);
   
         /* 抛出JSON异常处理 */
         if (!$banner) {

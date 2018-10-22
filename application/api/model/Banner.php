@@ -8,24 +8,19 @@ use think\Model;
 
 class Banner extends Model
 {
+    //需要隐藏字段
+    protected $hidden = ['delete_time','update_time'];
+
     public function items () {
         return $this->hasMany('BannerItem','banner_id','id');
     }
 
     public static function getBannerById($id)
     {   
-        //查询条件
-        $where_arr = [
-            'banner_id' => ['=',$id]
-        ];
-        
-        //查询构造器
-        $result = Db::name('banner_item')
-        ->where(function ($query) use ($id) {
-            $query->where('banner_id','=',$id);
-        })
-        ->select();
+        $banner = self::with(['items','items.img'])
+            ->find($id);
 
-        return $result;
+        return $banner;
+
     }
 }
