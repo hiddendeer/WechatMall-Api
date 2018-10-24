@@ -6,7 +6,7 @@ use think\Exception;
 use think\Db;
 use think\Model;
 
-class Banner extends Model
+class Banner extends BaseModel
 {
     //需要隐藏字段
     protected $hidden = ['delete_time','update_time'];

@@ -23,7 +23,7 @@ class Banner
 
         //自定义Model方法
         $banner = BannerModel::getBannerById($id);
-  
+
         /* 抛出JSON异常处理 */
         if (!$banner) {
             throw new BannerMissException();
