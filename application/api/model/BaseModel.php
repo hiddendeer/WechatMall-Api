@@ -13,7 +13,7 @@ class BaseModel extends Model
         $finaUrl = $value;
 
         if ($data['from'] == 1) {
-            return $finaUrl = config('setting.img_prefix') . $value;
+            $finaUrl = config('setting.img_prefix') . $value;
         }
 
         return $finaUrl;

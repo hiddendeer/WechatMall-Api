@@ -4,7 +4,6 @@ namespace app\api\model;
 
 use think\Exception;
 use think\Db;
-use think\Model;
 
 class Banner extends BaseModel
 {
@@ -17,6 +16,7 @@ class Banner extends BaseModel
 
     public static function getBannerById($id)
     {   
+        
         $banner = self::with(['items','items.img'])
             ->find($id);
 
