@@ -3,6 +3,8 @@
 namespace app\api\controller\v1;
 
 use app\api\validate\IDCollection;
+use app\lib\exception\ThemeException;
+use app\api\model\Theme as ThemeModel;
 
 class Theme
 {
@@ -15,6 +17,20 @@ class Theme
     {
         (new IDCollection())->gocheck();
 
-        return true;
+        $ids = explode(',',$ids);
+        $result = ThemeModel::with('topicImg,headImg')
+            ->select($ids);
+
+        if (!$result) {
+            throw new ThemeException();
+        }
+
+        return $result;
+    }
+
+    public function getComplexOne ($id)
+    {
+        $result = ThemeModel::with('products')->find($id);
+        return $result;
     }
 }
