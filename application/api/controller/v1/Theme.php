@@ -3,6 +3,7 @@
 namespace app\api\controller\v1;
 
 use app\api\validate\IDCollection;
+use app\api\validate\IDMustBePostiveInt;
 use app\lib\exception\ThemeException;
 use app\api\model\Theme as ThemeModel;
 
@@ -30,7 +31,9 @@ class Theme
 
     public function getComplexOne ($id)
     {
-        $result = ThemeModel::with('products')->find($id);
-        return $result;
+        (new IDMustBePostiveInt())->gocheck();
+        $theme = ThemeModel::getThemeWithProducts($id);
+
+        return $theme;
     }
 }
