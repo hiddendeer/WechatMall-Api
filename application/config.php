@@ -31,7 +31,7 @@ return [
     // 扩展函数文件
     'extra_file_list' => [THINK_PATH . 'helper' . EXT],
     // 默认输出类型
-    'default_return_type' => 'html',
+    'default_return_type' => 'json',
     // 默认AJAX 数据返回格式,可选json xml ...
     'default_ajax_return' => 'json',
     // 默认JSONP格式返回的处理方法
@@ -91,7 +91,7 @@ return [
     // 是否开启路由
     'url_route_on' => true,
     // 路由使用完整匹配
-    'route_complete_match' => false,
+    'route_complete_match' => true,
     // 路由配置文件（支持配置多个）
     'route_config_file' => ['route'],
     // 是否强制使用路由
@@ -168,7 +168,7 @@ return [
         // 日志保存目录
         'path' => LOG_PATH,
         // 日志记录级别
-        'level' => [],
+        'level' => ['sql'],
     ],
 
     // +----------------------------------------------------------------------

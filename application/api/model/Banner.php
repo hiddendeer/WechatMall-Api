@@ -1,21 +1,26 @@
 <?php
+
 namespace app\api\model;
 
 use think\Exception;
+use think\Db;
 
-class Banner
+class Banner extends BaseModel
 {
+    //需要隐藏字段
+    protected $hidden = ['delete_time','update_time'];
+
+    public function items () {
+        return $this->hasMany('BannerItem','banner_id','id');
+    }
+
     public static function getBannerById($id)
-    {
-        //TODO：根据Banner ID号 获取banner信息
-        // try {
-        //     1 / 0;
-        //     } 
-        // catch (Exception $ex) {
-        //     throw $ex;
-        // }
-        // return "11111111";
-        return null;
-       
+    {   
+        
+        $banner = self::with(['items','items.img'])
+            ->find($id);
+
+        return $banner;
+
     }
 }
