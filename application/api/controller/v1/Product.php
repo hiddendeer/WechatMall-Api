@@ -10,6 +10,7 @@ class Product
 {
     public function getRecent($count = 15)
     {
+        //参数合法性验证
         (new Count())->goCheck();
 
         $products = ProductModel::getMostRecent($count);
