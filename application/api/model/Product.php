@@ -18,11 +18,18 @@ class Product extends BaseModel
     public static function getMostRecent($count)
     {
         //限制条数
-        $product = self::limit($count)
+        $products = self::limit($count)
             ->order('create_time desc')
             ->select();
 
-        return $product;
+        return $products;
+    }
+
+    public static function getProductsByCategoryID($categoryID)
+    {
+        $products = self::where('category_id', '=', $categoryID)->select();
+
+        return $products;
     }
 
 }

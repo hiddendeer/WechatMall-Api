@@ -20,4 +20,6 @@ Route::get('api/:version/theme/:id', 'api/:version.Theme/getComplexOne');
 
 Route::get('api/:version/product/recent', 'api/:version.Product/getRecent');
 
+Route::get('api/:version/product/category_id', 'api/:version.Product/getAllInCategory');
+
 Route::get('api/:version/category/all', 'api/:version.category/getAllCategories');
