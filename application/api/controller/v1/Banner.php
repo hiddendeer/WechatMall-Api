@@ -25,7 +25,7 @@ class Banner
         $banner = BannerModel::getBannerById($id);
 
         /* 抛出JSON异常处理 */
-        if (!$banner) {
+        if ($banner->isEmpty()) {
             throw new BannerMissException();
         }
 
