@@ -1,13 +1,13 @@
 <?php
 /**
  * 验证器基类.
-*/
+ */
 
 namespace app\api\validate;
 
-use think\Validate;
-use think\Request;
 use app\lib\exception\ParameterException;
+use think\Request;
+use think\Validate;
 
 class BaseValidate extends Validate
 {
@@ -38,4 +38,16 @@ class BaseValidate extends Validate
             return false;
         }
     }
+
+    protected function isNotEmpty($value, $rule = '', $data = '', $field = '')
+    {
+        if (empty($value)) {
+
+            return false;
+
+        } else {
+            return true;
+        }
+    }
+
 }
