@@ -23,3 +23,5 @@ Route::get('api/:version/product/recent', 'api/:version.Product/getRecent');
 Route::get('api/:version/product/category_id', 'api/:version.Product/getAllInCategory');
 
 Route::get('api/:version/category/all', 'api/:version.category/getAllCategories');
+
+Route::get('api/:version/token/user','api/:version.token/getToken');

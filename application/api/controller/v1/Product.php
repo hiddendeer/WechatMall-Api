@@ -31,6 +31,7 @@ class Product
 
         $products = ProductModel::getProductsByCategoryID($id);
         $products->hidden(['summary']);
+        
         if ($products->isEmpty()) {
             throw new ProductException();
         }
