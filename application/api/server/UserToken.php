@@ -4,6 +4,7 @@ namespace app\api\server;
 
 use think\Exception;
 use app\lib\exception\WeChatException;
+use app\api\model\User as UserModel;
 
 class UserToken
 {
@@ -20,6 +21,10 @@ class UserToken
         $this->wxLoginUrl = sprintf(config('wx.login_url'), $this->wxAppID, $this->wxAppSecret, $this->code);
       
     }
+
+    /**
+     * 请求url接口，返回openid和session_key
+     */
     public function get()
     {
         $result = curl_get($this->wxLoginUrl);
@@ -38,6 +43,10 @@ class UserToken
         }
     }
 
+    /**
+     * 获取openid
+     * @param array $wxResult 拿到有openid的返回值
+     */
     private function grantToken ($wxResult) {
         //拿到openid
         //数据库里看一下，这个openid是不是已经存在
@@ -45,10 +54,53 @@ class UserToken
         //生成令牌，准备缓存数据，写入缓存
         //把令牌返回到客户端去
         $openid =  $wxResult['openid'];
+        $user = UserModel::getByOpenID($openid);
+
+        if ($user) {
+
+            $uid = $user->id;
+
+        } else {
+           
+            $uid = $this->newUser($openid);
+            
+        }
     }
 
+    private function saveToCache ($cacheValue) {
+        $key = generateToken();
+    }
+
+    /**
+     * 需要缓存的数据
+     */
+    private function prepareCacheValue ($wxResult,$uid) {
+        $cacheValue = $wxResult;
+        $cacheValue['uid'] = $uid;
+        $cacheValue['scope'] = 16;
+        
+        return $cacheValue;
+    }
+
+    /**
+     * 数据入库函数
+     * @param string $openid
+     */
+    private function newUser ($openid) {
+
+        $user = UserModel::create([
+            'openid' => $openid
+        ]);
+
+        return $user->id;
+    }
+
+    /**
+     * 异常处理函数
+     * @param array $wxResult 携带返回值的数据
+     */
     private function processLoginError ($wxResult) {
-     
+        
         throw new WeChatException([
             'msg' => $wxResult['errmsg'],
             'errCode' => $wxResult['errcode']
