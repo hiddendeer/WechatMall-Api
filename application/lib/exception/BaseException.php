@@ -18,7 +18,7 @@ class BaseException extends Exception
     //构造函数初始化
     public function __construct($params = [])
     {
-
+        
         if (!is_array($params)) {
             return ;
             // throw new Exception('参数必须是数组');

@@ -3,7 +3,7 @@
 namespace app\api\server;
 
 use think\Exception;
-use app\lib\exception\WxChatException;
+use app\lib\exception\WeChatException;
 
 class UserToken
 {
@@ -25,7 +25,7 @@ class UserToken
         $result = curl_get($this->wxLoginUrl);
        
         $wxResult = json_decode($result, true);
-     
+  
         if (empty($wxResult)) {
             throw new Exception('获取session_key及openID时错误，微信内部错误');
         } else {
@@ -49,7 +49,7 @@ class UserToken
 
     private function processLoginError ($wxResult) {
      
-        throw new WxChatException([
+        throw new WeChatException([
             'msg' => $wxResult['errmsg'],
             'errCode' => $wxResult['errcode']
         ]);
