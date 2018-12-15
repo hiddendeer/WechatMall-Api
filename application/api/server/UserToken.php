@@ -5,6 +5,7 @@ namespace app\api\server;
 use app\api\model\User as UserModel;
 use app\lib\exception\WeChatException;
 use think\Exception;
+use app\lib\exception\TokenException;
 
 class UserToken extends Token
 {
@@ -38,7 +39,7 @@ class UserToken extends Token
             if ($loginFail) {
                 $this->processLoginError($wxResult);
             } else {
-                $this->grantToken($wxResult);
+                return $this->grantToken($wxResult);
             }
         }
     }
@@ -66,11 +67,28 @@ class UserToken extends Token
             $uid = $this->newUser($openid);
 
         }
+        
+        $cacheValue = $this->prepareCacheValue($wxResult,$uid);
+        $token = $this->saveToCache($cacheValue);
+      
+        return $token;
     }
 
     private function saveToCache($cacheValue)
     {
-        $key = generateToken();
+        $key = self::generateToken();
+        $value = json_encode($cacheValue);
+        $expire_in = config('setting.token_expire_in');
+        $request = cache($key,$value,$expire_in);
+
+        if (!$request) {
+            throw new TokenException([
+                'msg' => '服务器缓存异常',
+                'errorCode' => 10005
+            ]);
+        }
+        
+        return $key;
     }
 
     /**
@@ -108,7 +126,7 @@ class UserToken extends Token
 
         throw new WeChatException([
             'msg' => $wxResult['errmsg'],
-            'errCode' => $wxResult['errcode'],
+            'errorCode' => $wxResult['errcode'],
         ]);
 
     }
