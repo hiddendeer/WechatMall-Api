@@ -38,4 +38,10 @@ class Product
 
         return $products;
     }
+
+    public function getOne($id){
+        (new IDMustBePostiveInt())->gocheck();
+
+        
+    }
 }

@@ -15,6 +15,16 @@ class Product extends BaseModel
 
     }
 
+    public function imgs()
+    {
+        $this->hasMany('ProductImage','product_id','id');
+    }
+
+    public function Properties()
+    {
+        $this->hasMany('ProductProperty','product_id','id');
+    }
+
     public static function getMostRecent($count)
     {
         //限制条数
@@ -30,6 +40,11 @@ class Product extends BaseModel
         $products = self::where('category_id', '=', $categoryID)->select();
 
         return $products;
+    }
+
+    public static function getProductDetail($id) 
+    {
+
     }
 
 }
