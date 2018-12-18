@@ -31,7 +31,7 @@ class Product
 
         $products = ProductModel::getProductsByCategoryID($id);
         $products->hidden(['summary']);
-        
+
         if ($products->isEmpty()) {
             throw new ProductException();
         }
@@ -39,9 +39,16 @@ class Product
         return $products;
     }
 
-    public function getOne($id){
+    public function getOne($id)
+    {
         (new IDMustBePostiveInt())->gocheck();
+        $product = ProductModel::getProductDetail($id);
 
-        
+        if (!$product) {
+            throw new ProductException();
+        }
+
+        return $product;
+
     }
 }

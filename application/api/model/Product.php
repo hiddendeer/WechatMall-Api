@@ -17,12 +17,12 @@ class Product extends BaseModel
 
     public function imgs()
     {
-        $this->hasMany('ProductImage','product_id','id');
+        return $this->hasMany('ProductImage', 'product_id', 'id');
     }
 
-    public function Properties()
+    public function properties()
     {
-        $this->hasMany('ProductProperty','product_id','id');
+        return $this->hasMany('ProductProperty', 'product_id', 'id');
     }
 
     public static function getMostRecent($count)
@@ -42,9 +42,18 @@ class Product extends BaseModel
         return $products;
     }
 
-    public static function getProductDetail($id) 
+    public static function getProductDetail($id)
     {
+        $product = self::with([
+            'imgs' => function ($query) {
+                $query->with(['imgUrl'])
+                    ->order('order', 'asc');
+            },
+        ])
+            ->with(['properties'])
+            ->find($id);
 
+        return $product;
     }
 
 }
