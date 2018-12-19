@@ -13,7 +13,7 @@ class Category
     public function getAllCategories()
     {
 
-        $categories = CategoryModel::all([11, 12], 'img');
+        $categories = CategoryModel::all([], 'img');
 
         if ($categories->isEmpty()) {
             throw new CategoryException();

@@ -26,3 +26,5 @@ Route::get('api/:version/product/recent', 'api/:version.Product/getRecent');
 Route::get('api/:version/category/all', 'api/:version.category/getAllCategories');
 
 Route::get('api/:version/token/user', 'api/:version.token/getToken');
+
+Route::get('api/:version/address', 'api/:version.Adress/createOrUpdateAddress');
